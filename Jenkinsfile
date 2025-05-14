@@ -16,7 +16,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "docker-compose build -t $IMAGE_NAME:$IMAGE_TAG ."
+                    sh "docker-compose build"
                 }
             }
         }
@@ -24,7 +24,7 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                    sh "docker-compose up --name flask_container $IMAGE_NAME:$IMAGE_TAG"
+                    sh "docker-compose up -d"
                 }
             }
         }
