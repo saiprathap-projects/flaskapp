@@ -1,4 +1,4 @@
-from flask import Flask
+'''from flask import Flask
 app = Flask(__name__)
 
 @app.route("/")
@@ -28,7 +28,7 @@ def weather():
         city = 'mathura'
   
     # your API key will come here 
-    api = api_key_here 
+    api = 3cd98018f5dc8e61267f3931b1cbff89
   
     # source contain json data from api 
     source = urllib.request.urlopen('http://api.openweathermap.org/data/2.5/weather?q =' + city + '&appid =' + api).read() 
@@ -52,4 +52,3 @@ def weather():
   
 if __name__ == '__main__': 
     app.run(debug = True)
-'''
