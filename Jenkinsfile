@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('SCM checkout') {
             steps {
-                git 'https://github.com/your-username/your-flask-repo.git'
+                git credentialsId: 'a500b7e5-e244-466b-8d05-074c05b22cae', url: 'https://github.com/saiprathap-projects/flaskapp.git'
             }
         }
 
