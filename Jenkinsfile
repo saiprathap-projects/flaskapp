@@ -41,7 +41,10 @@ pipeline {
             steps {
                 script {
                     sh """
-                    docker tag ${ECR_REPO}:${IMAGE_TAG} ${ECR_URI}:${IMAGE_TAG}
+                    docker tag flaskapp_nginx:${IMAGE_TAG} ${ECR_URI}:${IMAGE_TAG}
+                    docker push ${ECR_URI}:${IMAGE_TAG}
+
+                    docker tag flaskapp_flaskapp:${IMAGE_TAG} ${ECR_URI}:${IMAGE_TAG}
                     docker push ${ECR_URI}:${IMAGE_TAG}
                     """
                 }
