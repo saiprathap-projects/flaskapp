@@ -2,8 +2,6 @@ pipeline {
     agent any
 
     environment {
-        AWS_ACCESS_KEY_ID = credentials('AKIAU6VTTPAYEW3W6OEJ')
-        AWS_SECRET_ACCESS_KEY = credentials('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')
         AWS_DEFAULT_REGION = 'us-east-1'
         ECR_REPO = 'flaskapp'
         IMAGE_TAG = 'latest'
