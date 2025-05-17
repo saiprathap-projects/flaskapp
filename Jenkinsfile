@@ -17,7 +17,8 @@ pipeline {
         }
         stage('Login to ECR') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'aws-creds', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+                withCredentials([usernamePassword(credentialsId: 'aws-creds', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) 
+                {
                     sh '''
                         aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
                         aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
@@ -44,10 +45,12 @@ pipeline {
                     for (svc in service) {
                         def localImage = "${svc}:${IMAGE_TAG}"
                         def remoteImage = "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/${svc}:${IMAGE_TAG}"
-                    sh """
-                    docker tag ${localImage} ${remoteImage}
-                    docker push ${remoteImage}
-                    """
+                        
+                        sh """
+                        docker tag ${localImage} ${remoteImage}
+                        docker push ${remoteImage}
+                        """
+                    }
                 }
             }
         }
@@ -60,5 +63,4 @@ pipeline {
             }
         }
     }
-
 }
