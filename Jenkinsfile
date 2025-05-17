@@ -15,14 +15,6 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/saiprathap-projects/flaskapp.git'
             }
         }
-
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    sh "docker-compose build"
-                }
-            }
-        }
         stage('Login to ECR') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'aws-creds', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
@@ -37,15 +29,24 @@ pipeline {
                 }
             }
         }
-        stage('Push to ECR') {
+        stage('Build Docker Image') {
             steps {
                 script {
+                    sh "docker-compose build"
+                }
+            }
+        }
+        stage('Tag & Push image to ECR') {
+            steps {
+                script {
+                    def services = ['flaskapp', 'nginx']
+                    
+                    for (svc in service) {
+                        def localImage = "${svc}:${IMAGE_TAG}"
+                        def remoteImage = "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/${svc}:${IMAGE_TAG}"
                     sh """
-                    docker tag flaskapp_nginx:${IMAGE_TAG} ${ECR_URI}:${IMAGE_TAG}
-                    docker push ${ECR_URI}:${IMAGE_TAG}
-
-                    docker tag flaskapp_flaskapp:${IMAGE_TAG} ${ECR_URI}:${IMAGE_TAG}
-                    docker push ${ECR_URI}:${IMAGE_TAG}
+                    docker tag ${localImage} ${remoteImage}
+                    docker push ${remoteImage}
                     """
                 }
             }
