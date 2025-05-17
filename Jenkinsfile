@@ -42,7 +42,7 @@ pipeline {
                 script {
                     def services = ['flaskapp', 'nginx']
                     
-                    for (svc in service) {
+                    for (svc in services) {
                         def localImage = "${svc}:${IMAGE_TAG}"
                         def remoteImage = "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/${svc}:${IMAGE_TAG}"
                         
