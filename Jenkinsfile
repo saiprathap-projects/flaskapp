@@ -5,7 +5,6 @@ pipeline {
         AWS_REGION = 'us-east-1'
         AWS_ACCOUNT_ID = '340752824368'
         ECR_REPO = 'flaskapp'
-        IMAGE_TAG = 'latest'
         
     }
 
@@ -45,7 +44,7 @@ pipeline {
                     
                     for (service in services) {
                         def localImage = "${service}:latest"
-                        def remoteImage = "${ecrUrl}/${service}:${env.IMAGE_TAG}"
+                        def remoteImage = "${ecrUrl}/${service}:latest}"
 
                         sh """
                         docker tag ${localImage} ${remoteImage}
