@@ -5,7 +5,6 @@ pipeline {
         AWS_REGION = 'us-east-1'
         AWS_ACCOUNT_ID = '340752824368'
         ECR_REPO = 'flaskapp'
-        IMAGE_TAG = 'latest'
         
     }
 
@@ -33,10 +32,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh """
-                    echo "Building with IMAGE_TAG=${env.IMAGE_TAG}"
-                    IMAGE_TAG=${env.IMAGE_TAG} docker-compose build
-                    """
+                    sh  "docker-compose build"                    
                 }
             }
         }
@@ -47,8 +43,8 @@ pipeline {
                     def services = ['flaskapp', 'nginx']                    
                     
                     for (service in services) {
-                        def localImage = "${service}:${env.IMAGE_TAG}"
-                        def remoteImage = "${ecrUrl}/${service}:${env.IMAGE_TAG}"
+                        def localImage = "${service}:latest"
+                        def remoteImage = "${ecrUrl}/${service}:latest"
 
                         sh """
                         docker tag ${localImage} ${remoteImage}
@@ -62,9 +58,7 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                 sh """
-                    IMAGE_TAG=${env.IMAGE_TAG} docker-compose up -d
-                 """
+                    sh  "docker-compose up -d"
                 }
             }
         }
