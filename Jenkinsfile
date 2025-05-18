@@ -34,8 +34,8 @@ pipeline {
             steps {
                 script {
                     sh """
-                    echo "Building with IMAGE_TAG=${IMAGE_TAG}"
-                    IMAGE_TAG=${IMAGE_TAG} docker-compose build
+                    echo "Building with IMAGE_TAG=${env.IMAGE_TAG}"
+                    IMAGE_TAG=${env.IMAGE_TAG} docker-compose build
                     """
                 }
             }
@@ -63,7 +63,7 @@ pipeline {
             steps {
                 script {
                  sh """
-                    IMAGE_TAG=${IMAGE_TAG} docker-compose up -d
+                    IMAGE_TAG=${env.IMAGE_TAG} docker-compose up -d
                  """
                 }
             }
