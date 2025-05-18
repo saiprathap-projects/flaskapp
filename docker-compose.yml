@@ -3,7 +3,6 @@ version: '3'
 services:
   flaskapp:
     build: ./flaskapp-docker
-    image: flaskapp:latest
     container_name: flaskapp
     #ports:
     # - "8000:8000"
@@ -11,7 +10,6 @@ services:
 
   nginx:
     build: ./nginx
-    image: nginx:latest
     container_name: nginx
     environment:
       - SERVER_NAME=34.234.85.179
