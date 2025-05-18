@@ -3,6 +3,7 @@ version: '3'
 services:
   flaskapp:
     build: ./flaskapp-docker
+    image: flaskapp:${IMAGE_TAG}
     container_name: flaskapp
     #ports:
     # - "8000:8000"
@@ -10,6 +11,7 @@ services:
 
   nginx:
     build: ./nginx
+    image: nginx:${IMAGE_TAG}
     container_name: nginx
     environment:
       - SERVER_NAME=34.234.85.179
