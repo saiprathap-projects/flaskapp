@@ -5,7 +5,7 @@ pipeline {
         AWS_REGION = 'us-east-1'
         AWS_ACCOUNT_ID = '340752824368'
         ECR_REPO = 'flaskapp'
-        IMAGE_TAG = 'latest'
+        
     }
 
     stages {
@@ -39,13 +39,14 @@ pipeline {
         stage('Tag & Push image to ECR') {
             steps {
                 script {
-                    def services = ['flaskapp', 'nginx']
                     def ecrUrl = "${env.AWS_ACCOUNT_ID}.dkr.ecr.${env.AWS_REGION}.amazonaws.com"
+                    def services = ['flaskapp', 'nginx']
+                    def IMAGE_TAG = 'latest'
                     
                     for (svc in services) {
-                        def localImage = "${svc}:${env.IMAGE_TAG}"
-                        def remoteImage = "${ecrUrl}/${svc}:${env.IMAGE_TAG}"
-                        
+                        def localImage = "${svc}:${imageTag}"
+                        def remoteImage = "${ecrUrl}/${svc}:${imageTag}"
+
                         sh """
                         docker tag ${localImage} ${remoteImage}
                         docker push ${remoteImage}
