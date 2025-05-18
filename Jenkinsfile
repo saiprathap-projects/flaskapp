@@ -41,12 +41,11 @@ pipeline {
             steps {
                 script {
                     def ecrUrl = "${env.AWS_ACCOUNT_ID}.dkr.ecr.${env.AWS_REGION}.amazonaws.com"
-                    def services = ['flaskapp', 'nginx']
-                    def imageTag = "${env.IMAGE_TAG}"
+                    def services = ['flaskapp', 'nginx']                    
                     
                     for (service in services) {
-                        def localImage = "${service}:${imageTag}"
-                        def remoteImage = "${ecrUrl}/${service}:${imageTag}"
+                        def localImage = "${service}:${env.IMAGE_TAG}"
+                        def remoteImage = "${ecrUrl}/${service}:${env.IMAGE_TAG}"
 
                         sh """
                         docker tag ${localImage} ${remoteImage}
