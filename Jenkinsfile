@@ -33,10 +33,10 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "echo IMAGE_TAG=${env.IMAGE_TAG} > .env"
-                    echo "Environment variables:"
-                    cat .env
-                    sh "docker-compose build"
+                    sh """
+                    echo "Building with IMAGE_TAG=${IMAGE_TAG}"
+                    IMAGE_TAG=${IMAGE_TAG} docker-compose build
+                    """
                 }
             }
         }
@@ -62,8 +62,9 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                    docker-compose down || true
-                    docker-compose up -d
+                 sh """
+                    IMAGE_TAG=${IMAGE_TAG} docker-compose up -d
+                 """
                 }
             }
         }
