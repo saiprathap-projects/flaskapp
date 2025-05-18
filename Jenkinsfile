@@ -33,7 +33,8 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "IMAGE_TAG=${env.IMAGE_TAG} docker-compose build"
+                    sh "echo IMAGE_TAG=${env.IMAGE_TAG} > .env"
+                    sh "docker-compose build"
                 }
             }
         }
