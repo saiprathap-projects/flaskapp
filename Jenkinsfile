@@ -43,7 +43,7 @@ pipeline {
                     def ecrUrl = "${env.AWS_ACCOUNT_ID}.dkr.ecr.${env.AWS_REGION}.amazonaws.com"
                     def services = ['flaskapp', 'nginx']
                     
-                    for (svc in services) {
+                    services.each { svc ->
                         def localImage = "${svc}:${env.IMAGE_TAG}"
                         def remoteImage = "${ecrUrl}/${svc}:${env.IMAGE_TAG}"
 
