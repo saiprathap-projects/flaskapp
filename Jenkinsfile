@@ -44,7 +44,7 @@ pipeline {
                     
                     for (service in services) {
                         def localImage = "${service}:latest"
-                        def remoteImage = "${ecrUrl}/${service}:latest}"
+                        def remoteImage = "${ecrUrl}/${service}:latest"
 
                         sh """
                         docker tag ${localImage} ${remoteImage}
