@@ -54,8 +54,10 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "cd ../../"
-                    sh  "docker-compose build"                    
+                    sh '''
+                    cd $WORKSPACE
+                    docker-compose build
+                    '''
                 }
             }
         }
