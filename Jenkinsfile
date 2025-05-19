@@ -40,8 +40,8 @@ pipeline {
                     sh '''
                         cd terraform/ECR
                         terraform init
-                        terraform plan -var="region=${AWS_REGION}" -var="repository_name=flaskapp"
-                        terraform apply -auto-approve -var="region=${AWS_REGION}" -var="repository_name=flaskapp"
+                        terraform plan
+                        terraform apply -auto-approve
 
                        '''
                 }
