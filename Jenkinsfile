@@ -34,16 +34,6 @@ pipeline {
                 }
             }
         }
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    sh '''
-                    cd $WORKSPACE
-                    docker-compose build
-                    '''
-                }
-            }
-        }
         stage ('Terraform - Create ECR') {
             steps {
                 script {
@@ -58,6 +48,16 @@ pipeline {
                         terraform apply -auto-approve
 
                        '''
+                }
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh '''
+                    cd $WORKSPACE
+                    docker-compose build
+                    '''
                 }
             }
         }
