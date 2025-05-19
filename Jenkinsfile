@@ -40,7 +40,7 @@ pipeline {
             steps {
                 script {
                     def ecrUrl = "${env.AWS_ACCOUNT_ID}.dkr.ecr.${env.AWS_REGION}.amazonaws.com"
-                    def services = ['flaskapp', 'nginx']                    
+                    def services = ['flaskapp_flaskapp', 'flaskapp_nginx']                    
                     
                     for (service in services) {
                         def localImage = "${service}:latest"
