@@ -80,11 +80,15 @@ pipeline {
             }
         }
 
-        stage('Run Docker Container') {
+        stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    sh  "docker-compose up -d"
-                }
+                        sh '''
+                        kubectl apply -f k8s/deployment.yaml
+                        kubectl apply -f k8s/service.yaml
+                        kubectl rollout status deployment flask-nginx-deployment
+                        '''                 
+               }
             }
         }
     }
