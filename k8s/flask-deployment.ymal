@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-nginx-deployment
+  labels:
+    app: flask-nginx
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: flask-nginx
+  template:
+    metadata:
+      labels:
+        app: flask-nginx
+    spec:
+      containers:
+        - name: flaskapp
+          image:  340752824368.dkr.ecr.us-east-1.amazonaws.com/flaskapp:latest
+          ports:
+            - containerPort: 5000
+        - name: nginx
+          image: 340752824368.dkr.ecr.us-east-1.amazonaws.com/flaskapp@sha256:3de226f14ab1b0d411dae3a06b30da4aff6209fead598cd450618fdb31b6b3b0
+          ports:
+            - containerPort: 80
