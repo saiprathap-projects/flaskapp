@@ -84,8 +84,8 @@ pipeline {
             steps {
                 script {
                         sh '''
-                        kubectl apply -f k8s/flask-deployment.yaml
-                        kubectl apply -f k8s/nginx-service.yaml
+                        kubectl apply -f k8s/flask-deployment.yaml --validate=false
+                        kubectl apply -f k8s/nginx-service.yaml --validate=false
                         kubectl rollout status deployment flask-nginx-deployment
                         '''                 
                }
