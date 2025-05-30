@@ -88,6 +88,7 @@ pipeline {
                         sh '''
                         kubectl apply -f k8s/flask-deployment.yaml --validate=false
                         kubectl apply -f k8s/nginx-service.yaml --validate=false
+                        trap "echo 'Pipeline interrupted'; exit 1" SIGINT SIGTERM
                         kubectl rollout status deployment flask-nginx-deployment
                         '''                 
                     }
