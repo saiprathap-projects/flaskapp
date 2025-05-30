@@ -5,6 +5,7 @@ pipeline {
         AWS_REGION = 'us-east-1'
         AWS_ACCOUNT_ID = '340752824368'
         ECR_REPO = 'flaskapp'
+        KUBECONFIG = "${WORKSPACE}/config"
         
     }
 
@@ -83,13 +84,15 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
+                    withCredentials([file(credentialsId: 'kubeconfig-prod', variable: 'KUBECONFIG')]) {
                         sh '''
                         kubectl apply -f k8s/flask-deployment.yaml --validate=false
                         kubectl apply -f k8s/nginx-service.yaml --validate=false
                         kubectl rollout status deployment flask-nginx-deployment
                         '''                 
-               }
-            }
-        }
-    }
+                    }
+              }
+          }  
+      }
+   }     
 }
