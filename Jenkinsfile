@@ -86,10 +86,12 @@ pipeline {
                 script {
                     withCredentials([file(credentialsId: 'kubeconfig-prod', variable: 'KUBECONFIG')]) {
                         sh '''
-                        trap 'echo "Pipeline interrupted"; exit 1' SIGINT SIGTERM
-                        kubectl apply -f k8s/flask-deployment.yaml --validate=false
-                        kubectl apply -f k8s/nginx-service.yaml --validate=false
-                        kubectl rollout status deployment flask-nginx-deployment
+                        (
+                            trap 'echo "Pipeline interrupted"; exit 1' SIGINT SIGTERM
+                            kubectl apply -f k8s/flask-deployment.yaml --validate=false
+                            kubectl apply -f k8s/nginx-service.yaml --validate=false
+                            kubectl rollout status deployment flask-nginx-deployment
+                        )
                         '''                 
                     }
               }
