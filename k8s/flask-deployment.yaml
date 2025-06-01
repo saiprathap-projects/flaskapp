@@ -18,7 +18,7 @@ spec:
         - name: flaskapp
           image:  340752824368.dkr.ecr.us-east-1.amazonaws.com/flaskapp:latest
           ports:
-            - containerPort: 5000
+            - containerPort: 8000
         - name: nginx
           image: 340752824368.dkr.ecr.us-east-1.amazonaws.com/flaskapp@sha256:3de226f14ab1b0d411dae3a06b30da4aff6209fead598cd450618fdb31b6b3b0
           ports:
