@@ -68,10 +68,9 @@ pipeline {
                     def ecrUrl = "${env.AWS_ACCOUNT_ID}.dkr.ecr.${env.AWS_REGION}.amazonaws.com"
                     def images = ['flaskapp_flaskapp':'flaskapp','flaskapp_nginx':'flask-nginx']                    
                     
-                    for (entry in images) {
-                        def localImage = "${entry.key}:latest"
-                        def remoteRepo = entry.value
-                        def remoteImage = "${ecrUrl}/${remoteRepo}:latest"
+                    images.each { key, value ->
+                        def localImage = "${key}:latest"
+                        def remoteImage = "${ecrUrl}/${value}:latest"
 
                         sh """
                         docker tag ${localImage} ${remoteImage}
