@@ -14,6 +14,8 @@ spec:
       labels:
         app: flask-nginx
     spec:
+      imagePullSecrets:
+        - name: ecr-creds
       containers:
         - name: flaskapp
           image:  340752824368.dkr.ecr.us-east-1.amazonaws.com/flaskapp:latest
@@ -23,6 +25,5 @@ spec:
           image: 340752824368.dkr.ecr.us-east-1.amazonaws.com/flask-nginx:latest
           ports:
             - containerPort: 80
-      imagePullSecrets:
-        - name: ecr-creds
+      
       
