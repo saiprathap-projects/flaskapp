@@ -3,11 +3,10 @@ kind: Service
 metadata:
   name: flaskapp-service
 spec:
-  type: NodePort  # Use LoadBalancer if on AWS EKS
+  type: NodePort  # Or LoadBalancer on cloud platforms
   selector:
     app: flask-nginx
   ports:
     - port: 80
       targetPort: 80
       protocol: TCP
-      name: http
