@@ -4,6 +4,6 @@ provider "aws" {
 resource "aws_ecr_repository" "flaskapp" {
   name = var.repository_name
 }
-resource "aws_ecr_repository" "flaskapp_nginx" {
+resource "aws_ecr_repository" "flask_nginx" {
   name = var.repository_name
 }
