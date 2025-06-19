@@ -57,7 +57,8 @@ pipeline {
                 script {
                     sh '''
                     cd $WORKSPACE
-                    docker-compose build
+                    docker compose version
+                    docker compose build
                     '''
                 }
             }
