@@ -58,7 +58,7 @@ pipeline {
                     sh '''
                     cd $WORKSPACE
                     docker compose version
-                    docker compose build
+                    docker compose build --no-cache
                     '''
                 }
             }
