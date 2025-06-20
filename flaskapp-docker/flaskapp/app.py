@@ -1,11 +1,19 @@
 # app.py
 from flask import Flask, jsonify, request
 import requests
+from prometheus_client import start_http_server, Summary, Counter
 
 app = Flask(__name__)
 
+# Prometheus metrics
+REQUEST_COUNT = Counter('weather_api_requests_total', 'Total number of weather API requests')
+REQUEST_LATENCY = Summary('weather_api_request_latency_seconds', 'Latency of weather API requests')
+
 @app.route('/weather', methods=['GET'])
+@REQUEST_LATENCY.time()
 def get_weather():
+    REQUEST_COUNT.inc()
+
     city = request.args.get('city')
     if not city:
         return jsonify({'error': 'Missing city parameter'}), 400
@@ -22,4 +30,6 @@ def get_weather():
     })
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Start Prometheus metrics server on port 8000
+    start_http_server(8000)
+    app.run(host='0.0.0.0', port=5000, debug=True)
