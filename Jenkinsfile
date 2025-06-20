@@ -76,17 +76,25 @@ pipeline {
             steps {
                 script {
                     def ecrUrl = "${env.AWS_ACCOUNT_ID}.dkr.ecr.${env.AWS_REGION}.amazonaws.com"
-                    def images = ['flaskapp':'flaskapp','flask-nginx':'flask-nginx']                    
-                    
-                    images.each { key, value ->
-                        def localImage = "${key}:latest"
-                        def remoteImage = "${ecrUrl}/${value}:latest"
+                    def commitId = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+                    def versionTag = "v${env.BUILD_NUMBER}-${commitId}"
+                    def images = ['flaskapp':'flaskapp', 'flask-nginx':'flask-nginx']
+
+                    images.each { localName, repoName ->
+                        def localImage = "${localName}:latest"
+                        def latestTag = "${ecrUrl}/${repoName}:latest"
+                        def versionedTag = "${ecrUrl}/${repoName}:${versionTag}"
 
                         sh """
-                        docker tag ${localImage} ${remoteImage}
-                        docker push ${remoteImage}
+                        docker tag ${localImage} ${latestTag}
+                        docker tag ${localImage} ${versionedTag}
+                        docker push ${latestTag}
+                        docker push ${versionedTag}
                         """
                     }
+
+                    // Save version tag for later use (like updating deployment)
+                    env.IMAGE_VERSION = versionTag
                 }
             }
         }
