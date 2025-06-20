@@ -36,6 +36,15 @@ pipeline {
             }
         }
         stage ('Terraform - Create ECR') {
+            when {
+                expression {
+                   // This shell command checks for both repositories
+                   def flaskExists = sh(script: "aws ecr describe-repositories --repository-names flaskapp --region $AWS_REGION", returnStatus: true) == 0
+                   def nginxExists = sh(script: "aws ecr describe-repositories --repository-names flask-nginx --region $AWS_REGION", returnStatus: true) == 0
+
+                   return !(flaskExists && nginxExists) // Run only if at least one repo is missing
+                }
+            }
             steps {
                 script {
                     sh '''
