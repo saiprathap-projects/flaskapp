@@ -15,7 +15,7 @@ spec:
         app: flask-nginx
     spec:
       imagePullSecrets:
-        - name: ecr-registry-secret
+        - name: ecr-creds
       containers:
         - name: flaskapp
           image:  340752824368.dkr.ecr.us-east-1.amazonaws.com/flaskapp:latest
