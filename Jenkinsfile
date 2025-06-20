@@ -107,6 +107,7 @@ pipeline {
                      withCredentials([file(credentialsId: 'kubeconfig-prod', variable: 'KUBECONFIG')]) {
                          sh """
                          # Apply the base deployment YAML (once or if needed for initial deploy)
+                         kubectl apply -f k8s/flask-deployment.yaml --validate=false
                          kubectl apply -f k8s/nginx-service.yaml --validate=false
 
                          # Update container images dynamically using the Jenkins-generated version tag
