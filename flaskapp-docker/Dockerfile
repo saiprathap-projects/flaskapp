@@ -1,8 +1,7 @@
 FROM ubuntu:latest
 
 RUN  apt update -y && apt install python3 python3-pip python3-venv -y && \
-     apt install gunicorn3 -y
-RUN pip install prometheus_client
+     apt install gunicorn3 -y && apt install prometheus_client
 COPY requirements.txt requirements.txt
 
 COPY flaskapp /opt/flaskapp
