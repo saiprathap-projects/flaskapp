@@ -13,10 +13,10 @@ spec:
     metadata:
       labels:
         app: flask-nginx
-      annotations:                            # ✅ Must be sibling to labels
+      annotations:
         prometheus.io/scrape: "true"
         prometheus.io/path: "/metrics"
-        prometheus.io/port: "8000"            # ✅ Matches flaskapp's containerPort
+        prometheus.io/port: "8000"  # Match this with containerPort of flaskapp
     spec:
       imagePullSecrets:
         - name: ecr-creds
