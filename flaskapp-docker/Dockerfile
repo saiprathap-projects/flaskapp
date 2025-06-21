@@ -14,8 +14,8 @@ RUN python3 -m venv /venv
 ENV PATH="/venv/bin:$PATH"
 RUN pip install --upgrade pip && pip install prometheus_client
 RUN pip install flask requests
-RUN apt install gunicorn3 -y
+RUN pip install gunicorn
 
 WORKDIR /opt/flaskapp
 
-CMD [ "/venv/bin/gunicorn3","-b","0.0.0.0:8000","app:app","--workers=5" ]
+CMD [ "/venv/bin/gunicorn","-b","0.0.0.0:8000","app:app","--workers=5" ]
