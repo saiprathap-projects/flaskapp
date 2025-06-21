@@ -16,18 +16,16 @@ spec:
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/path: "/metrics"
-        prometheus.io/port: "5000"
+        prometheus.io/port: "8000"
     spec:
       imagePullSecrets:
         - name: ecr-creds
       containers:
         - name: flaskapp
-          image:  340752824368.dkr.ecr.us-east-1.amazonaws.com/flaskapp:latest
+          image: 340752824368.dkr.ecr.us-east-1.amazonaws.com/flaskapp:latest
           ports:
             - containerPort: 8000
         - name: nginx
           image: 340752824368.dkr.ecr.us-east-1.amazonaws.com/flask-nginx:latest
           ports:
             - containerPort: 80
-      
-      
