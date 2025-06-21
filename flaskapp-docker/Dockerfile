@@ -1,22 +1,16 @@
 FROM ubuntu:latest
 
-RUN apt update -y
-RUN apt install python3 -y
-RUN apt install python3-pip -y 
-RUN apt install gunicorn3 -y
-RUN apt install python3-venv -y
-
+RUN  apt update -y && apt install python3 python3-pip python3-venv -y && \
+     apt install gunicorn3 -y 
 COPY requirements.txt requirements.txt
 
 COPY flaskapp /opt/flaskapp
 
 RUN python3 -m venv /venv
 ENV PATH="/venv/bin:$PATH"
-RUN pip install --upgrade pip
-RUN pip install prometheus_client
-RUN apt install python3-flask -y
-RUN apt install python3-requests -y
+RUN pip install --upgrade pip && pip install prometheus_client
+RUN apt install python3-flask -y && apt install python3-requests -y
 
 WORKDIR /opt/flaskapp
 
-CMD [ "gunicorn","-b","0.0.0.0:8000","app:app","--workers=5" ]
+CMD [ "/venv/bin/gunicorn","-b","0.0.0.0:8000","app:app","--workers=5" ]
