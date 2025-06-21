@@ -13,7 +13,9 @@ COPY flaskapp /opt/flaskapp
 RUN python3 -m venv /venv
 ENV PATH="/venv/bin:$PATH"
 RUN pip install --upgrade pip && pip install prometheus_client
-RUN apt install python3-flask python3-requests gunicorn3 -y
+RUN apt install python3-flask -y
+RUN apt install python3-requests -y
+RUN apt install gunicorn3 -y
 
 WORKDIR /opt/flaskapp
 
