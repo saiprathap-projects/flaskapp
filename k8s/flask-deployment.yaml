@@ -13,10 +13,10 @@ spec:
     metadata:
       labels:
         app: flask-nginx
-        annotations:
-          prometheus.io/scrape: "true"
-          prometheus.io/path: "/metrics"
-          prometheus.io/port: "5000"
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/metrics"
+        prometheus.io/port: "5000"
     spec:
       imagePullSecrets:
         - name: ecr-creds
