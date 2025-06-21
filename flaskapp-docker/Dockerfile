@@ -19,4 +19,4 @@ RUN apt install python3-requests -y
 
 WORKDIR /opt/flaskapp
 
-CMD [ "gunicorn3","-b","0.0.0.0:8000","app:app","--workers=5" ]
+CMD [ "/venv/bin/gunicorn","-b","0.0.0.0:8000","app:app","--workers=5" ]
